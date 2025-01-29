@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.kiki.shortlink.common.convention.result.Result;
 import org.kiki.shortlink.common.convention.result.Results;
 import org.kiki.shortlink.dto.req.UserRegisterReqDTO;
+import org.kiki.shortlink.dto.req.UserUpdateReqDTO;
 import org.kiki.shortlink.dto.resp.UserActualRespDTO;
 import org.kiki.shortlink.dto.resp.UserRespDTO;
 import org.kiki.shortlink.service.UserService;
@@ -51,6 +52,10 @@ public class UserController {
     }
 
 
-
+    @PutMapping("/api/short-link/admin/v1/user")
+    public Result<Void> update (@RequestBody UserUpdateReqDTO requestParam){
+        userService.update(requestParam);
+        return Results.success();
+    }
 
 }

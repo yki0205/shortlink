@@ -65,6 +65,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     @Override
     public void update(UserUpdateReqDTO requestParam) {
 
+        LambdaUpdateWrapper<UserDO>updateWrapper=Wrappers.lambdaUpdate(UserDO.class).eq(UserDO::getUsername,requestParam.getUsername());
+        baseMapper.update(BeanUtil.toBean(requestParam,UserDO.class),updateWrapper);
     }
 
     @Override
