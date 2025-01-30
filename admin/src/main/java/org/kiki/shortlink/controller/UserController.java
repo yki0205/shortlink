@@ -4,9 +4,11 @@ import cn.hutool.core.bean.BeanUtil;
 import lombok.RequiredArgsConstructor;
 import org.kiki.shortlink.common.convention.result.Result;
 import org.kiki.shortlink.common.convention.result.Results;
+import org.kiki.shortlink.dto.req.UserLoginReqDTO;
 import org.kiki.shortlink.dto.req.UserRegisterReqDTO;
 import org.kiki.shortlink.dto.req.UserUpdateReqDTO;
 import org.kiki.shortlink.dto.resp.UserActualRespDTO;
+import org.kiki.shortlink.dto.resp.UserLoginRespDTO;
 import org.kiki.shortlink.dto.resp.UserRespDTO;
 import org.kiki.shortlink.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +57,30 @@ public class UserController {
     @PutMapping("/api/short-link/admin/v1/user")
     public Result<Void> update (@RequestBody UserUpdateReqDTO requestParam){
         userService.update(requestParam);
+        return Results.success();
+    }
+    /**
+     * 用户登录
+     */
+    @PostMapping("/api/short-link/admin/v1/user/login")
+    public Result<UserLoginRespDTO> login(@RequestBody UserLoginReqDTO requestParam) {
+        return Results.success(userService.login(requestParam));
+    }
+
+    /**
+     * 检查用户是否登录
+     */
+    @GetMapping("/api/short-link/admin/v1/user/check-login")
+    public Result<Boolean> checkLogin(@RequestParam("username") String username, @RequestParam("token") String token) {
+        return Results.success(userService.checkLogin(username, token));
+    }
+
+    /**
+     * 用户退出登录
+     */
+    @DeleteMapping("/api/short-link/admin/v1/user/logout")
+    public Result<Void> logout(@RequestParam("username") String username, @RequestParam("token") String token) {
+        userService.logout(username, token);
         return Results.success();
     }
 
